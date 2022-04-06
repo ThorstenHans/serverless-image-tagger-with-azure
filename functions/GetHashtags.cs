@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs;
 using System.Linq;
 using System.Globalization;
+using System;
 
 namespace ThorstenHans.ImageTagger
 {
@@ -21,20 +22,22 @@ namespace ThorstenHans.ImageTagger
             ILogger log)
         {
             log.LogInformation($"Looking for hashtags ({fileName})");
-            if ( found == null){
+
+            if (found == null)
+            {
+                log.LogDebug($"Image ({fileName}) not found. Will return with 404");
                 return new NotFoundResult();
             }
-            
+
             var p = await found.GetPropertiesAsync();
-            
-            return new OkObjectResult(p.Value.Metadata.Values.Select(tag=> $"#{ToPascalCase(tag)}"));
+            return new OkObjectResult(p.Value.Metadata.Values.Select(tag => $"#{CleanUp(tag)}"));
         }
 
-        private static string ToPascalCase(string v){
-            if (string.IsNullOrWhiteSpace(v)) return "";
-
+        private static string CleanUp(string v)
+        {
+            if (string.IsNullOrWhiteSpace(v)) return string.Empty;
             var info = CultureInfo.CurrentCulture.TextInfo;
-            return info.ToTitleCase(v).Replace(" ", string.Empty);
+            return info.ToTitleCase(v).Replace(" ", string.Empty).Replace("-", string.Empty);
 
         }
     }

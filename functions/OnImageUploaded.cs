@@ -7,6 +7,7 @@ using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace ThorstenHans.ImageTagger
 {
@@ -25,22 +26,23 @@ namespace ThorstenHans.ImageTagger
         public async Task Run([BlobTrigger("images/{name}", Connection = "ImagesStorageAccount")] BlobClient image, string name)
         {
             Log.LogInformation($"OnImageUploaded invoked for {image.Name}");
-
-            var client = new ComputerVisionClient(
-                new ApiKeyServiceClientCredentials(Config.SubscriptionKey))
+            var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(Config.SubscriptionKey))
             {
                 Endpoint = Config.Endpoint
             };
+
             var features = new List<VisualFeatureTypes?> { VisualFeatureTypes.Tags };
 
             var result = await client.AnalyzeImageWithHttpMessagesAsync(image.Uri.ToString(), features);
-            Log.LogInformation($"Got response from Computer Vision with status ({result.Response.StatusCode})");
+
+            Log.LogDebug($"Received response from Azure Computer Vision (StatusCode {result.Response.StatusCode})");
 
             var tags = result.Body.Tags
                 .Select((tag, index) => new { index = $"tag_{index}", tag })
                 .ToDictionary(x => x.index, x => x.tag.Name);
 
             await image.SetMetadataAsync(tags);
+            Log.LogDebug($"Hashtags for image '{image.Name}' stored in blob metadata ({tags.Count} tags)");
         }
     }
 }
