@@ -10,7 +10,7 @@ using System.Linq;
 using System.Globalization;
 using System;
 
-namespace ThorstenHans.ImageTagger
+namespace ThorstenHans.ImageTagger.Functions
 {
     public static class GetHashtags
     {

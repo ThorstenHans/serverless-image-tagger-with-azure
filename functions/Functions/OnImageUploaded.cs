@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using System;
 
-namespace ThorstenHans.ImageTagger
+namespace ThorstenHans.ImageTagger.Functions
 {
     public class OnImageUploaded
     {
