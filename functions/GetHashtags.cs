@@ -9,7 +9,7 @@ using Azure.Storage.Blobs;
 using System.Linq;
 using System.Globalization;
 
-namespace ThorstenHans.XmasTagger
+namespace ThorstenHans.ImageTagger
 {
     public static class GetHashtags
     {

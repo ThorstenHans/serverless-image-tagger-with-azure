@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs;
 
-namespace ThorstenHans.XmasTagger
+namespace ThorstenHans.ImageTagger
 {
     public static class UploadImage
     {

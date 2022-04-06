@@ -1,10 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using ThorstenHans.XmasTagger;
 
-[assembly: FunctionsStartup(typeof(Startup))]
-namespace ThorstenHans.XmasTagger
+[assembly: FunctionsStartup(typeof(ThorstenHans.ImageTagger.Startup))]
+namespace ThorstenHans.ImageTagger
 {
 
     public class Startup : FunctionsStartup
@@ -13,10 +12,10 @@ namespace ThorstenHans.XmasTagger
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddOptions<XmasTaggerConfig>()
+            builder.Services.AddOptions<ImageTaggerConfig>()
                 .Configure<IConfiguration>((settings, configuration) =>
             {
-                configuration.GetSection(XmasTaggerConfig.SectionName).Bind(settings);
+                configuration.GetSection(ImageTaggerConfig.SectionName).Bind(settings);
             });
         }
     }

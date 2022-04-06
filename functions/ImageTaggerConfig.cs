@@ -1,6 +1,6 @@
-namespace ThorstenHans.XmasTagger
+namespace ThorstenHans.ImageTagger
 {
-    public class XmasTaggerConfig
+    public class ImageTaggerConfig
     {
         public const string SectionName = "ComputerVision";
         public string SubscriptionKey { get; set; }

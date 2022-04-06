@@ -8,13 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
-namespace ThorstenHans.XmasTagger
+namespace ThorstenHans.ImageTagger
 {
     public class OnImageUploaded
     {
-        protected XmasTaggerConfig Config { get; }
+        protected ImageTaggerConfig Config { get; }
         protected ILogger<OnImageUploaded> Log { get; }
-        public OnImageUploaded(IOptions<XmasTaggerConfig> options,
+        public OnImageUploaded(IOptions<ImageTaggerConfig> options,
             ILogger<OnImageUploaded> log)
         {
             Config = options.Value;
